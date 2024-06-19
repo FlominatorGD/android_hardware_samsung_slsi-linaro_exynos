@@ -30,6 +30,14 @@ common_exynos_dirs := \
 	rpmbd \
 	videoapi
 
+ifeq ($(BOARD_USES_FIMGAPI_V5X), true)
+common_exynos_dirs += \
+   libfimg5x
+else
+common_exynos_dirs += \
+   libfimg4x
+endif
+
 ifeq ($(TARGET_USES_EVF), true)
 #common_exynos_dirs += libvision
 endif
@@ -84,6 +92,8 @@ common_exynos_dirs := \
 ifeq ($(TARGET_USES_EVF), true)
 #common_exynos_dirs += libvision
 endif
+
+
 
 ifeq ($(BOARD_USES_EXYNOS5_COMMON_GRALLOC), true)
 ifeq ($(BOARD_USES_EXYNOS_GRALLOC_VERSION), 0)
