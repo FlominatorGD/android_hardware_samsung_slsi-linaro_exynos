@@ -22,6 +22,7 @@ common_exynos_dirs := \
 	libhdr-common-headers \
 	libhdr10p-meta-common-headers \
 	libexynosutils \
+	libcec \
 	libcsc \
 	libv4l2 \
 	libswconverter \
