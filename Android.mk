@@ -28,6 +28,14 @@ common_exynos_dirs := \
 	tee \
 	videoapi
 
+ifeq ($(BOARD_USES_FIMGAPI_V5X), true)
+common_exynos_dirs += \
+   libfimg5x
+else
+common_exynos_dirs += \
+   libfimg4x
+endif
+
 ifeq ($(TARGET_USES_EVF), true)
 common_exynos_dirs += libvision
 endif
