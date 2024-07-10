@@ -35,6 +35,10 @@ else
 LOCAL_CFLAGS += -DDEFAULT_CSC_HW=5
 endif
 
+ifdef BOARD_USES_LEGACY_SCALER
+LOCAL_CFLAGS += -DUSES_LEGACY_SCALER
+endif
+
 ifeq ($(BOARD_USES_FIMC), true)
 LOCAL_SHARED_LIBRARIES += libexynosfimc
 else
