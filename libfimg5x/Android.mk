@@ -26,8 +26,8 @@ LOCAL_SRC_FILES:= \
 LOCAL_C_INCLUDES += \
 	$(TARGET_OUT_INTERMEDIATES)/KERNEL_OBJ/usr/include \
 	$(LOCAL_PATH)/../include \
-	hardware/samsung_slsi/$(TARGET_SOC)/include \
-	hardware/samsung_slsi/$(TARGET_BOARD_PLATFORM)/include
+	hardware/samsung_slsi-linaro/$(TARGET_SOC)/include \
+	hardware/samsung_slsi-linaro/$(TARGET_BOARD_PLATFORM)/include
 
 LOCAL_ADDITIONAL_DEPENDENCIES := \
 	$(TARGET_OUT_INTERMEDIATES)/KERNEL_OBJ/usr
@@ -38,5 +38,5 @@ LOCAL_MODULE:= libfimg
 
 LOCAL_PRELINK_MODULE := false
 
-include $(TOP)/hardware/samsung_slsi/exynos/BoardConfigCFlags.mk
+include $(TOP)/hardware/samsung_slsi-linaro/exynos/BoardConfigCFlags.mk
 include $(BUILD_SHARED_LIBRARY)
