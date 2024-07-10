@@ -27,6 +27,12 @@ LOCAL_ARM_MODE := arm
 LOCAL_STATIC_LIBRARIES := libswconverter
 LOCAL_SHARED_LIBRARIES := liblog libexynosscaler
 
+LOCAL_SHARED_LIBRARIES := liblog libexynosscaler
+
+ifeq ($(TARGET_BOARD_PLATFORM), exynos5)
+LOCAL_SHARED_LIBARIES += libexynosutils
+endif
+
 LOCAL_CFLAGS += -DUSE_SAMSUNG_COLORFORMAT
 
 ifdef BOARD_DEFAULT_CSC_HW_SCALER
