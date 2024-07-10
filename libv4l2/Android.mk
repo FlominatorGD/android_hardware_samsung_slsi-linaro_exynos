@@ -18,7 +18,12 @@ include $(CLEAR_VARS)
 
 LOCAL_SRC_FILES := \
 	exynos_v4l2.c \
-	exynos_subdev.c
+        exynos_subdev.c
+
+ifeq ($(TARGET_BOARD_PLATFORM), exynos5)
+LOCAL_SRC_FILES +=
+	exynos_mc.c
+endif
 
 LOCAL_C_INCLUDES := \
 	$(LOCAL_PATH)/../include \
