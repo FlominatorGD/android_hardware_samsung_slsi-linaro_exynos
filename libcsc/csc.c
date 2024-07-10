@@ -42,11 +42,21 @@
 #include "exynos_fimc.h"
 #endif
 
+#ifdef USES_LEGACY_SCALER
+#ifdef USES_GSCALER
+#include "exynos_gscaler_legacy.h"
+#endif
+#else
 #ifdef USES_GSCALER
 #include "exynos_gscaler.h"
 #endif
+#endif
 
+#ifdef USES_LEGACY_SCALER
+#include <exynos_scaler_legacy.h>
+#else
 #include <exynos_scaler.h>
+#endif
 
 #define GSCALER_IMG_ALIGN 16
 #define FIMC_IMG_ALIGN_WIDTH 16
