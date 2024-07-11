@@ -21,7 +21,7 @@ LOCAL_SRC_FILES := \
         exynos_subdev.c
 
 ifeq ($(TARGET_BOARD_PLATFORM), exynos5)
-LOCAL_SRC_FILES +=
+LOCAL_SRC_FILES += \
 	exynos_mc.c
 endif
 
