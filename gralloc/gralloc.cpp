@@ -46,7 +46,7 @@
 #define MSCL_EXT_SIZE 512
 #define MSCL_ALIGN 128
 
-#if MALI_AFBC_GRALLOC == 1 /* It's for AFBC support on GPU DDK*/
+#ifdef MALI_AFBC_GRALLOC /* It's for AFBC support on GPU DDK*/
 #include "format_chooser.h"
 #define GRALLOC_ARM_INTFMT_EXTENSION_BIT_START     32
 /* This format will be use AFBC */
@@ -164,12 +164,12 @@ static int gralloc_alloc_rgb(int ionfd, int w, int h, int format, int usage,
                              unsigned int ion_flags, private_handle_t **hnd, int *stride)
 {
     size_t bpr = 0, ext_size=256, size = 0;
-#ifndef USES_EXYNOS7580
+#if defined(USES_EXYNOS7580) || defined(USES_EXYNOS5420)
     size_t size1 = 0, afbc_header_size = 0;
 #endif
     int bpp = 0, vstride = 0;
     int fd = -1;
-#ifndef USES_EXYNOS7580
+#if defined(USES_EXYNOS7580) || defined(USES_EXYNOS5420)
     int fd1 = -1;
 #endif
     uint32_t nblocks = 0;
@@ -224,7 +224,7 @@ static int gralloc_alloc_rgb(int ionfd, int w, int h, int format, int usage,
             int h_aligned = ALIGN( h, AFBC_PIXELS_PER_BLOCK );
             nblocks = *stride / AFBC_PIXELS_PER_BLOCK * h_aligned / AFBC_PIXELS_PER_BLOCK;
 
-#ifndef USES_EXYNOS7580
+#if defined(USES_EXYNOS7580) || defined(USES_EXYNOS5420)
             afbc_header_size = ALIGN( nblocks * AFBC_HEADER_BUFFER_BYTES_PER_BLOCKENTRY, AFBC_BODY_BUFFER_BYTE_ALIGNMENT );
 #endif
             size = *stride * h_aligned * bpp +
@@ -261,7 +261,7 @@ static int gralloc_alloc_rgb(int ionfd, int w, int h, int format, int usage,
         ALOGE("failed to get fd from exynos_ion_alloc, %s, %d\n", __func__, __LINE__);
         return -EINVAL;
     }
-#ifndef USES_EXYNOS7580
+#if defined(USES_EXYNOS7580) || defined(USES_EXYNOS5420)
     else
     {
         // Alloc for AFBC data
@@ -297,7 +297,7 @@ static int gralloc_alloc_rgb(int ionfd, int w, int h, int format, int usage,
     }
 #endif
 
-#ifdef USES_EXYNOS7580
+#if defined(USES_EXYNOS7580) || defined(USES_EXYNOS5420)
     *hnd = new private_handle_t(fd, size, usage, w, h, format, format,
                     format, *stride, vstride, is_compressible);
 #else
@@ -308,7 +308,7 @@ static int gralloc_alloc_rgb(int ionfd, int w, int h, int format, int usage,
 
     return 0;
 
-#ifndef USES_EXYNOS7580
+#if defined(USES_EXYNOS7580) || defined(USES_EXYNOS5420)
 error_close_fd_and_return:
 	if (fd  >= 0)
 		close(fd);
@@ -367,7 +367,7 @@ static int gralloc_alloc_framework_yuv(int ionfd, int w, int h, int format, int 
         return -EINVAL;
     }
 
-#ifdef USES_EXYNOS7580
+#if defined(USES_EXYNOS7580) || defined(USES_EXYNOS5420)
     *hnd = new private_handle_t(fd, size,
                     usage, w, h, format, format, frameworkFormat, *stride, h, is_compressible);
 #else
@@ -563,7 +563,7 @@ static int gralloc_alloc_yuv(int ionfd, int w, int h, int format,
     }
 
     if (planes == 1) {
-#ifdef USES_EXYNOS7580
+#if defined(USES_EXYNOS7580) || defined(USES_EXYNOS5420)
         *hnd = new private_handle_t(fd, size, usage, w, h,
                                     format, internal_format, frameworkFormat, *stride, luma_vstride, is_compressible);
 #else
@@ -597,7 +597,7 @@ static int gralloc_alloc_yuv(int ionfd, int w, int h, int format,
                 return -EINVAL;
             }
 
-#ifdef USES_EXYNOS7580
+#if defined(USES_EXYNOS7580) || defined(USES_EXYNOS5420)
             *hnd = new private_handle_t(fd, fd1, fd2, size, usage, w, h,
                                         format, internal_format, frameworkFormat, *stride, luma_vstride, is_compressible);
 #else
@@ -605,7 +605,7 @@ static int gralloc_alloc_yuv(int ionfd, int w, int h, int format,
                                         format, internal_format, frameworkFormat, *stride, luma_vstride, is_compressible);
 #endif
         } else {
-#ifdef USES_EXYNOS7580
+#if defined(USES_EXYNOS7580) || defined(USES_EXYNOS5420)
             *hnd = new private_handle_t(fd, fd1, size, usage, w, h,
                                         format, internal_format, frameworkFormat, *stride, luma_vstride, is_compressible);
 #else
